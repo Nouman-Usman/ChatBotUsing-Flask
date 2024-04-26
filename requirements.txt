@@ -8,12 +8,12 @@ filelock==3.13.4
 Flask==3.0.3
 fsspec==2024.3.1
 generativeai==0.0.1
-google-ai-generativelanguage
+google-ai-generativelanguage==0.6.2
 google-api-core==2.18.0
 google-api-python-client==2.126.0
 google-auth==2.29.0
 google-auth-httplib2==0.2.0
-google-generativeai==0.1.0rc2
+google-generativeai==0.5.2
 googleapis-common-protos==1.63.0
 grpcio==1.62.2
 grpcio-status==1.62.2

@@ -18,8 +18,12 @@ function gotBuffers(buffers) {
 
 function doneEncoding(soundBlob) {
     // fetch('/audio', {method: "POST", body: soundBlob}).then(response => $('#output').text(response.text()))
-    fetch('/audio', {method: "POST", body: soundBlob}).then(response => response.text().then(text => {
-        document.getElementById('output').innerHTML =  text;
+    fetch('/audio', { method: "POST", body: soundBlob }).then(response => response.text().then(text => {
+        var formattedText = text.replace(/\n/g, "<br>");
+
+        // Set the formatted text as innerHTML of an element
+        document.getElementById('output').innerHTML = formattedText;
+        // document.getElementById('output').innerHTML =  text;
     }));
     recIndex++;
 }
@@ -61,9 +65,13 @@ function cancelAnalyserUpdates() {
 function updateAnalysers(time) {
     if (!analyserContext) {
         var canvas = document.getElementById("analyser");
-        canvasWidth = canvas.width;
-        canvasHeight = canvas.height;
-        analyserContext = canvas.getContext('2d');
+        if (!canvas) {
+            console.error("Analyser canvas element not found");
+            return;
+        }
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
+        var analyserContext = canvas.getContext('2d');
     }
 
     // analyzer draw code here
@@ -120,7 +128,7 @@ function gotStream(stream) {
     audioInput = realAudioInput;
     audioInput.connect(inputPoint);
 
-//    audioInput = convertToMono( input );
+    //    audioInput = convertToMono( input );
 
     analyserNode = audioContext.createAnalyser();
     analyserNode.fftSize = 2048;

@@ -3,6 +3,7 @@ import os
 import speech_recognition as sr
 from flask import logging, Flask, render_template, request, flash
 import google.generativeai as palm
+import re
 
 app = Flask(__name__)
 app.secret_key = "Nouman"
@@ -50,13 +51,16 @@ def audio():
             temperature=0.99,
             max_output_tokens=800
         )
+        completion.result = re.sub(r'\b\d+\.\b', '\n', completion.result)
         print(completion.result)
-        # try:
-        #     for num, texts in enumerate(text['alternative']):
-        #         return_text += str(num+1) +") " + texts['transcript']  + " <br> "
-        # except:
-        #     return_text = " Sorry!!!! Voice not Detected "
+        try:
+            for num, texts in enumerate(text['alternative']):
+                return_text += str(num+1) +") " + texts['transcript']  + " <br> "
+        except:
+            return_text = " Sorry!!!! Voice not Detected "
         os.remove('upload/audio.wav')
+        completion.result = completion.result.replace("*", "")
+        completion.result = completion.result.replace("", "")
         # subprocess.call(['say', completion.result])
     return str(completion.result)
 
