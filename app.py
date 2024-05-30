@@ -7,7 +7,7 @@ import re
 
 app = Flask(__name__)
 app.secret_key = "Nouman"
-API_KEY = 'AIzaSyDzj8yESjjCS6vWNIFAAnjaKVtjGTNsl8g'
+API_KEY = 'Your Api Key'
 palm.configure(api_key=API_KEY)
 
 
